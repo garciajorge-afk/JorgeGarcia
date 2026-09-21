@@ -1,0 +1,57 @@
+<!doctype html> 
+  <html> 
+    <head> 
+      <meta charset="utf-8">
+      <title>OndaSinodial</title> 
+      <link rel="stylesheet" href="style.css"> 
+    </head> 
+
+    <body> 
+      <canvas id="canvas" width="400" height="400"></canvas>
+
+      <script src="utils.js"></script> 
+      <script src="./classes/pelota.js"></script>
+
+      <script> 
+        window.onload = function () { 
+          var canvas = document.getElementById('canvas'), 
+              context = canvas.getContext('2d'), 
+              mouse = utils.captureMouse(canvas),
+              //pelota = new Image();
+             // pelota.src = "cat.png";
+              ball = new Pelota(), 
+              angle = 0, 
+              centerScale = 1, 
+              range = 0.5,
+              speed = 0.05;
+
+          ball.x = canvas.width / 2; 
+          ball.y = canvas.height / 2; 
+
+          (function drawFrame () { 
+            window.requestAnimationFrame(drawFrame); 
+
+             context.clearRect(0, 0, canvas.width, canvas.height); 
+
+            ball.y = canvas.height / 2 + Math.sin(angle) * 50; 
+
+            ball.scaleX = ball.scaleY = 
+              centerScale + Math.sin(angle) * range; 
+
+            angle += speed; 
+
+            ball.draw(context); 
+            var dx = mouse.x - ball.x,
+                dy = mouse.y - ball.y;
+            ball.rotation = Math.atan2(dy, dx); 
+           // console.log(radianes);
+            ball.draw(context);
+            //context.rotate(radianes); 
+            //context.drawImage(ball, -pelota.width/2, -pelota.height/2);
+           // context.restore();
+          }()); 
+        }; 
+      </script>
+  </body>
+</html> 
+
