@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <canvas id="canvas" width="1000" height="800"></canvas>
+    <script>
+    window.onload = function () {
+      //Our code here...
+      var canvas = document.getElementById('canvas'),
+          context = canvas.getContext('2d');
+          context.save();
+          context.lineWidth = 2;
+          context.strokeStyle = 'Black';
+          context.fillStyle='Beige';
+
+          /*--dibujo de una casita sencilla--*/
+          context.beginPath();
+          context.moveTo(100,100);
+          context.lineTo(150,50);
+          context.lineTo(200,100);
+          context.lineTo(200,200);
+          context.lineTo(100,200);
+          context.lineTo(100,100);
+          context.fill();
+          context.stroke();
+          context.restore();
+
+         /*--dibujo de un honguito sencillo--*/
+         context.save(); 
+          context.lineWidth = 2; 
+          context.strokeStyle = 'Black'; 
+          context.fillStyle = 'Red'; 
+          context.beginPath(); 
+          context.arc(300, 120, 60, Math.PI, 0); 
+          context.lineTo(360, 120); 
+          context.lineTo(240, 120); 
+          context.fill(); 
+          context.stroke(); 
+          context.fillStyle = 'White'; 
+          context.beginPath(); 
+          context.rect(270, 120, 60, 80); 
+          context.fill(); 
+          context.stroke(); 
+          context.restore(); 
+
+         /*--dibujo de una estrella sencilla--*/
+          context.save(); 
+          context.lineWidth = 2; 
+          context.strokeStyle = 'Black'; 
+          context.fillStyle = 'Gold'; 
+          context.beginPath(); 
+          context.moveTo(500, 50); 
+          context.lineTo(515, 95); 
+          context.lineTo(565, 95); 
+          context.lineTo(525, 125); 
+          context.lineTo(540, 175); 
+          context.lineTo(500, 145); 
+          context.lineTo(460, 175); 
+          context.lineTo(475, 125); 
+          context.lineTo(435, 95); 
+          context.lineTo(485, 95); 
+          context.closePath(); 
+          context.fill(); 
+          context.stroke(); 
+          context.restore();
+          
+          /*--dibujo de una luna sencilla--*/
+          context.save(); 
+          context.lineWidth = 2; 
+          context.strokeStyle = 'Black'; 
+          context.fillStyle = 'lightgray'; 
+          context.beginPath(); 
+          context.arc(700, 120, 60, 0, Math.PI * 2); 
+          context.fill(); context.stroke(); 
+          context.globalCompositeOperation = 'destination-out'; 
+          context.beginPath(); 
+          context.arc(730, 100, 60, 0, Math.PI * 2); 
+          context.fill(); context.restore(); 
+
+          /*--dibujo de una sol sencilla--*/
+          context.save(); 
+          context.lineWidth = 2; 
+          context.strokeStyle = 'Black';
+          context.fillStyle = 'Yellow'; 
+          context.beginPath(); 
+          context.moveTo(850, 50); 
+          context.lineTo(850, 25); 
+          context.moveTo(850, 190);
+          context.lineTo(850, 215); 
+          context.moveTo(780, 120); 
+          context.lineTo(755, 120); 
+          context.moveTo(920, 120); 
+          context.lineTo(945, 120); 
+          context.moveTo(800, 70); 
+          context.lineTo(780, 50); 
+          context.moveTo(900, 70); 
+          context.lineTo(920, 50); 
+          context.moveTo(800, 170); 
+          context.lineTo(780, 190); 
+          context.moveTo(900, 170); 
+          context.lineTo(920, 190); 
+          context.stroke();
+          context.beginPath(); 
+          context.arc(850, 120, 50, 0, Math.PI * 2); 
+          context.fill(); 
+          context.stroke(); 
+          context.restore(); 
+  
+    };
+    </script>
+  </body>
+</html>
