@@ -1,0 +1,150 @@
+<!doctype html>  
+<html>  
+  <head>  
+    <meta charset="utf-8">  
+    <title>Mipaint</title>  
+    <style>  
+      body{   
+        text-align: center;  
+        margin-top: 20px;  
+        background-color:chocolate;  
+      }  
+      canvas {  
+        background-color: white;  
+      }  
+      .colores{  
+        width: 100%;  
+        height: 50px;  
+        text-align: center;  
+      }  
+      .colores button{  
+        width: 100px;  
+        height: 40px;  
+        margin-right: 5px;  
+        margin-top: 5px;  
+        color: white;  
+        font: 25px impact;  
+        cursor: pointer;  
+        border-radius: 15px;  
+      }  
+      .colores button:hover{  
+        opacity: 0.5;  
+      }  
+  
+      #black{  
+        background: black;  
+      }  
+      #red{  
+        background: red;  
+      }  
+      #yellow{  
+        background: yellow;  
+      }  
+      #green{  
+        background: green;  
+      }  
+      #blue{  
+        background: blue;  
+      }  
+  
+       #otros button{  
+        width: 300px;  
+        height: 50px;  
+        background: #303030;  
+        color: white;  
+        font: 25px impact;  
+        cursor: pointer;  
+        margin-bottom: 5px;  
+        border-radius: 15px;  
+      }  
+      #otros button:hover{  
+        opacity: 0.5;  
+      }  
+
+      .grosor{
+        margin: 10px;
+        font: 20px impact;
+        color: white;
+      }
+
+      #grosor{
+        width: 300px;
+        cursor: pointer;
+      }
+    </style>  
+  </head>  
+  <body>  
+
+    <div class="colores">  
+       <button id="black" type="button" value="#000000"></button>  
+       <button id="red" type="button" value="#ff0000"></button>
+       <button id="yellow" type="button" value="#ffff00"></button>
+       <button id="green" type="button" value="#008000"></button>
+       <button id="blue" type="button" value="#0000ff"></button>
+    </div>  
+
+    <div class="grosor">
+      Grosor de la pluma:
+      <input type="range" id="grosor" min="1" max="30" value="2">
+      <span id="valorGrosor">2</span> px
+    </div>
+ 
+    <div id="otros">  
+        <button id="clear" type="button">Borrar todo</button>  
+    </div>  
+ 
+    <canvas id="canvas" width="1000" height="700"></canvas>  
+    <aside>Click and draw with the mouse.</aside>  
+      
+    <script src="utils.js"></script>  
+    <script>  
+    window.onload = function () {  
+      var canvas = document.getElementById('canvas'),  
+          context = canvas.getContext('2d'),  
+          mouse = utils.captureMouse(canvas);  
+
+      // Grosor inicial de la pluma
+      context.lineWidth = 2;
+  
+      canvas.addEventListener('mousedown', function () {  
+        context.beginPath();  
+        context.moveTo(mouse.x, mouse.y);  
+        canvas.addEventListener('mousemove', onMouseMove, false);  
+      }, false);  
+  
+      canvas.addEventListener('mouseup', function () {  
+        canvas.removeEventListener('mousemove', onMouseMove, false);  
+      }, false);  
+  
+      function onMouseMove () {  
+        context.lineTo(mouse.x, mouse.y);  
+        context.stroke();  
+      }  
+  
+      // Cambiar color de trazo  
+      var colores = document.getElementsByClassName('colores')[0];  
+  
+      colores.addEventListener('click', function(event) {  
+           context.strokeStyle = event.target.value;  
+      });  
+
+      // Cambiar grosor de la pluma
+      var grosor = document.getElementById('grosor');
+      var valorGrosor = document.getElementById('valorGrosor');
+
+      grosor.addEventListener('input', function() {
+           context.lineWidth = grosor.value;
+           valorGrosor.textContent = grosor.value;
+      });
+  
+      // Borrar todo  
+      var clearButton = document.getElementById('clear'); 
+ 
+      clearButton.addEventListener('click', function() {  
+           context.clearRect(0, 0, canvas.width, canvas.height);  
+      });  
+    };  
+    </script>  
+  </body>  
+</html>
+
