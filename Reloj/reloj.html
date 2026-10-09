@@ -1,0 +1,81 @@
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+</style>
+
+<canvas id="reloj" width="400" height="400"></canvas>
+
+<script>
+var canvas = document.getElementById("reloj");
+var ctx = canvas.getContext("2d");
+
+var vr1 = 0.1;
+var vr2 = 1;
+var vr3 = 6;
+
+var a1 = 0;
+var a2 = 0;
+var a3 = 0;
+
+function dibujar() {
+    ctx.clearRect(0, 0, 400, 400);
+
+    // Circulo del reloj
+    ctx.beginPath();
+    ctx.arc(200, 200, 140, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Manecilla de horas
+    ctx.save();
+    ctx.translate(200, 200);
+    ctx.rotate(a1 * Math.PI / 180);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -60);
+    ctx.lineWidth = 7;
+    ctx.stroke();
+    ctx.restore();
+
+    // Manecilla de minutos
+    ctx.save();
+    ctx.translate(200, 200);
+    ctx.rotate(a2 * Math.PI / 180);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -100);
+    ctx.lineWidth = 5;
+    ctx.stroke();
+    ctx.restore();
+
+    // Manecilla de segundos
+    ctx.save();
+    ctx.translate(200, 200);
+    ctx.rotate(a3 * Math.PI / 180);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(0, -125);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "red";
+    ctx.stroke();
+    ctx.restore();
+
+    // Centro del reloj
+    ctx.beginPath();
+    ctx.arc(200, 200, 6, 0, Math.PI * 2);
+    ctx.fillStyle = "black";
+    ctx.fill();
+
+    a1 += vr1;
+    a2 += vr2;
+    a3 += vr3;
+
+    requestAnimationFrame(dibujar);
+}
+
+dibujar();
+</script>
