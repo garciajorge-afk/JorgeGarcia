@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>minave</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    #canvas {
+      background-image: url("espacio.gif");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      border: 1px solid #444;
+    }
+
+    aside {
+      margin-top: 12px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="canvas" width="960" height="464"></canvas>
+
+  <script src="utils.js"></script>
+  <script src="./classes/gato_ship.js"></script>
+
+  <script>
+    window.onload = function () {
+      var canvas = document.getElementById("canvas");
+      var context = canvas.getContext("2d");
+
+      var ship = new gato();
+
+      var vr = 0;
+      var vx = 0;
+      var vy = 0;
+      var thrust = 0;
+      var friction = 0.98;
+
+      ship.x = canvas.width / 2;
+      ship.y = canvas.height / 2;
+
+      // Detectar las teclas presionadas
+      window.addEventListener("keydown", function (event) {
+        switch (event.key) {
+          case "ArrowLeft":
+            vr = -3;
+            event.preventDefault();
+            break;
+
+          case "ArrowRight":
+            vr = 3;
+            event.preventDefault();
+            break;
+
+          case "ArrowUp":
+            thrust = 0.05;
+            ship.showFlame = true;
+            event.preventDefault();
+            break;
+        }
+      });
+
+      // Detener el giro y el impulso al soltar las teclas
+      window.addEventListener("keyup", function (event) {
+        if (
+          event.key === "ArrowLeft" ||
+          event.key === "ArrowRight"
+        ) {
+          vr = 0;
+        }
+
+        if (event.key === "ArrowUp") {
+          thrust = 0;
+          ship.showFlame = false;
+        }
+      });
+
+      // Animación principal
+      function drawFrame() {
+        requestAnimationFrame(drawFrame);
+
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Rotación del gato
+        ship.rotation += vr * Math.PI / 180;
+
+        var angle = ship.rotation;
+
+        // Aceleración según la dirección del gato
+        var ax = Math.cos(angle - Math.PI / 2) * thrust;
+        var ay = Math.sin(angle - Math.PI / 2) * thrust;
+
+        vx += ax;
+        vy += ay;
+
+        // Fricción
+        vx *= friction;
+        vy *= friction;
+
+        // Movimiento
+        ship.x += vx;
+        ship.y += vy;
+
+        // Salir por un lado y aparecer por el opuesto
+        if (ship.x - ship.width / 2 > canvas.width) {
+          ship.x = -ship.width / 2;
+        } else if (ship.x + ship.width / 2 < 0) {
+          ship.x = canvas.width + ship.width / 2;
+        }
+
+        if (ship.y - ship.height / 2 > canvas.height) {
+          ship.y = -ship.height / 2;
+        } else if (ship.y + ship.height / 2 < 0) {
+          ship.y = canvas.height + ship.height / 2;
+        }
+
+        ship.draw(context);
+      }
+
+      drawFrame();
+    };
+  </script>
+
+</body>
+</html>
